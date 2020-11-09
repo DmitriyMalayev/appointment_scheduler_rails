@@ -1,0 +1,55 @@
+<%= show_errors_for(appointment) %>
+<%= form_for appointment do |f| %>
+  <p>
+    <% if appointment.patient_id %>
+      <%= f.label :patient_id, "Patient" %>
+      <%= f.hidden_field :patient_id %>
+      <%= appointment.patient.name %>
+      <%# If the patient_id is already assigned or exists show it, with this style when you want to edit the form you will not have the option to change the patient or the doctor. This is an optional approach.   %>
+    <% else %>
+      <%= f.label :patient_id, "Patient" %>
+      <%= f.collection_select :patient_id, current_user.patients, :id, :name %>
+
+    <% end %>
+  </p>
+
+  <p>
+    <% if appointment.doctor_id %>
+      <%= f.label :doctor_id, "Doctor" %>
+      <%= f.hidden_field :doctor_id %>
+      <%= appointment.doctor.name %>
+      <%# If the doctor_id is already assigned or exists show it, with this style when you want to edit the form you will not have the option to change the patient or the doctor. This is an optional approach.   %>
+    <% else %>
+      <%= f.label :doctor_id, "Doctor" %>
+      <%= f.collection_select :doctor_id, Doctor.all, :id, :name %>
+      <%# Doctor.all because there isn't an association between Users and Doctors  %>
+    <% end %>
+  </p>
+  <p>
+    <%= f.label :location %>  <%# no selection?? is it because we don't have a separate model? %>
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    <%= f.label :start_time, "text" %>  <%# Start time with GUI Calendar %>
+    <%= f.datetime_field :start_time %>
+  </p>
+  <p>
+    <%= f.label :end_time, "text" %> <%# End time with GUI Calendar %>
+    <%= f.datetime_field :end_time %>
+  </p>
+  <%# f.collection_select :patient_id, current_user.patients, :id, :name %>
+  <%#What is the method we want to call on the appointment object? 
+   patient_id => This will assign the foreign key pointing to the patient that this appointment belongs to. 
+  What's the collection we want to generate the options for the form? 
+  It's not Patiants.all because we're not able to create an appointment for any patient or only patients that we have added ourselves. 
+  This is why we use current_user.patients. 
+
+  What is the method we want to call to populate each value? 
+  :id => We want the :id of each patient that the selected patient to be the argument we pass to patient_id=  
+  
+  What is the option value? 
+  The option value is going to be the return value from :id when it's called on that patient.  
+  The option value is what is going to end up in the input and in the params.  
+
+  The last argument is what the User will see. 
+  It is the text inside of the option. The name of the patient which is the only choice that makes sense to show to the user. %>

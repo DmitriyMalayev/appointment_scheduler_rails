@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -36,7 +36,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -272,6 +272,25 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :google_oauth2, ENV["GOOGLE_OAUTH_CLIENT_ID"], ENV["GOOGLE_OAUTH_CLIENT_SECRET"]
+  # We are configuring devise with omniauth to use these credentials. We need to do this so the gem is taking charge of the middle requests in the oauth flow for you properly.
+  # There are four requests involved with oauth.
+  # 2 from your server to the provider and 2 from the provider back to you.
+  # The first one is a link that you to the place where the user can authorize your application to use their data on that platform.
+  # The second one is when when they authorize thats sends a redirect back to you. This one is managed by the gem. We don't handle it, but it includes a temporary access code and that access code is used to send another request back to the provider (google in this example)  This one sends the code along in addition to your client id and client secret and it gets an access token along with some user information and that is the final request that's sent back.
+
+  # first one is the link to the provider to where they authorize.
+  # second one the redirect back to your site with a temporary access code.
+  # third one back from your site to the provider with that code and your credentials
+  # fourth one is a redirect back to your site including information and an access code that we can use to access the user's account moving forward.
+  #
+  # When we use a gem like OmniAuth and a plug in for google olaf2??
+  # We manage adding a link to start the process and then we add a route to handle the final redirect and there is some configuration to do on the provider platform to make sure that the offload is going to where you specify it to go. Because we're asking for access we also need to tell the provider when someone authorizes your app where are they going to redirect to and you need to whitelist this. This is for protection so no one messes with the link.
+  # PROJECT REQUIREMENTS
+  # Setup the login
+  # We don't have to do anything with the token that we get back
+  # Although, if you are in a situation where you want to be able to access a User's calendar you might want to persist their token so that later on you can send requests to the google calendar api using the User's access token, for example to create an event in their calendar.
+  # OAuth is really good at allowing a User's application to have access to a particular user's account on another application. This means you can access their data and you can add new data that belongs to that user account on the other platform. We can prevent google calendar conflicts by knowing when someone's calendar is shown unavailable.
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

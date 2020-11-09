@@ -1,0 +1,15 @@
+<h1>Doctors</h1>
+<button><%= link_to "Add Doctor", new_doctor_path %></button>
+<% @doctors.each do |doctor|  %>
+  <p><%= link_to  doctor.name, doctor_path(doctor) %></p>
+<% end %>
+<%# 
+doctor name with link to the show page 
+to_params is called on the argument passed into doctor_path  
+
+How do we determine what to put in the argument? 
+If you look at the routes, and find the doctor_path /doctors/:id 
+The :id means you need to put a doctor id in.  Don't include .id in the parameter. 
+
+The reason we sometimes see it as @doctor and not doctor is because sometimes it's an instance variable and not a local variable, or a block parameter. 
+%>

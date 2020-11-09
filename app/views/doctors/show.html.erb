@@ -1,0 +1,9 @@
+<h1><%= @doctor.name %></h1>
+
+<%# Instead of this being a drop down we want this to be filled in with the particular doctor. %>
+<p><%= link_to "Book with #{@doctor.name}", new_doctor_appointment_path(@doctor) %></p> 
+
+<%# link to appointments index page  %>
+<p><%= link_to "#{@doctor.name}'s appointments", doctor_appointments_path(@doctor)%></p>
+
+

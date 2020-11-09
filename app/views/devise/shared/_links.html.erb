@@ -18,8 +18,13 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
 
-<%- if devise_mapping.omniauthable? %>
+<%- if devise_mapping.omniauthable? %>   <%# added by devise including the link to OmniAuth  %> 
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
   <% end %>
 <% end %>
+
+<%# We can wrap link_to with a google image   %>
+<%# link_to image_tag("Search.png", border: 0), {action: 'search', controller: 'pages'}, {class: 'dock-item'}  %>
+
+ 

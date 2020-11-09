@@ -1,0 +1,20 @@
+<nav>
+  <%= link_to "Patients", patients_url %>
+  <%= link_to "Doctors", doctors_url %> 
+  <%= link_to  "Appointments", appointments_url %>
+  <% if user_signed_in? %>
+    <%# verifies if a user is signed in %>
+    <%= form_tag(destroy_user_session_path, method: :delete, style: 'display: inline-block;') do %>
+      <%# destroy_user_session_path is used for signing out the user %>
+      <%= submit_tag "Sign Out" %>
+    <% end %>
+  <% else %>    <%# If a user is not signed in they will be displayed a Sign Up and Sign In Link %>
+    <%= link_to "Sign Up", new_user_registration_path %>
+    <%= link_to "Sign In", new_user_session_path %>
+  <% end %>
+</nav>
+
+
+
+<%# We're putting chunks of our views in separate partial files which is going to be similar in React.   %>
+<%# When adding a layout, it's best to put it in this layout file so it's present everywhere. %> 

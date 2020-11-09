@@ -4,25 +4,18 @@
     <title>AppointmentSchedulerRails</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <nav>
-      <%= link_to "Patients", patients_url %>
-      <% if user_signed_in? %>
-        <%= form_tag(destroy_user_session_path, method: :delete, style: 'display: inline-block;') do %>
-          <%= submit_tag "Sign Out" %>
-        <% end %>
-      <% else %>
-        <%= link_to "Sign Up", new_user_registration_path %>
-        <%= link_to "Sign In", new_user_session_path %>
-      <% end %>
-    </nav>
+    <%= render partial: "shared/navbar" %>
     <p class="notice"><%= notice %></p>
+    <%# Makes sure that the messages that devise gem generates are shown in the html responses %>
     <p class="alert"><%= alert %></p>
+    <%# Makes sure that the messages that devise gem generates are shown in the html responses %>
+    <% flash.each do |name, message| %>
+      <%= content_tag :div, message, class: name %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

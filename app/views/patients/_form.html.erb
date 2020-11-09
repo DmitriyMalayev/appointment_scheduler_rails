@@ -1,0 +1,14 @@
+ <%= show_errors_for(patient) %>
+<%= form_for patient do |f| %>
+  <p>
+    <%= f.label :name, "Patient's Name" %>  <%# Clicking on Patient's Name label, focuses on the input  %>
+    <%= f.text_field :name %>  <%# Takes in and stores the input  %>
+  </p>
+  <%= f.submit %>  <%# Submits form  %>
+<% end %>
+<%# new and edit have similar code %>
+<%# 
+VARIATIONS 
+if @patient.errors[:name].any?
+if @patient.errors[:user_id].any? 
+%>
