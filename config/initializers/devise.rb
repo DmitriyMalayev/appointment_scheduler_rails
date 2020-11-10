@@ -274,16 +274,19 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :google_oauth2, ENV["GOOGLE_OAUTH_CLIENT_ID"], ENV["GOOGLE_OAUTH_CLIENT_SECRET"]
   # We are configuring devise with omniauth to use these credentials. We need to do this so the gem is taking charge of the middle requests in the oauth flow for you properly.
+ 
+ 
   # There are four requests involved with oauth.
   # 2 from your server to the provider and 2 from the provider back to you.
   # The first one is a link that you to the place where the user can authorize your application to use their data on that platform.
-  # The second one is when when they authorize thats sends a redirect back to you. This one is managed by the gem. We don't handle it, but it includes a temporary access code and that access code is used to send another request back to the provider (google in this example)  This one sends the code along in addition to your client id and client secret and it gets an access token along with some user information and that is the final request that's sent back.
+  # The second one is when when they authorize thats sends a redirect back to you. This one is managed by the gem. We don't handle it, but it includes a temporary access code and that access code is used to send another request back to the provider (google in this example)  This one sends the code along in addition to your client id and client secret and it gets an access token along with some user information and that is the final request that's sent back. 
 
-  # first one is the link to the provider to where they authorize.
-  # second one the redirect back to your site with a temporary access code.
-  # third one back from your site to the provider with that code and your credentials
-  # fourth one is a redirect back to your site including information and an access code that we can use to access the user's account moving forward.
-  #
+
+  # first one is the link to the provider to where they authorize.     
+  # second one the redirect back to your site with a temporary access code.   Handled by gem. 
+  # third one back from your site to the provider with that code and your credentials.  Handled by gem. 
+  # fourth one is a redirect back to your site including information and an access code that we can use to access the user's account moving forward.  Needs us to create a route for in the 
+  
   # When we use a gem like OmniAuth and a plug in for google olaf2??
   # We manage adding a link to start the process and then we add a route to handle the final redirect and there is some configuration to do on the provider platform to make sure that the offload is going to where you specify it to go. Because we're asking for access we also need to tell the provider when someone authorizes your app where are they going to redirect to and you need to whitelist this. This is for protection so no one messes with the link.
   # PROJECT REQUIREMENTS
